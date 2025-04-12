@@ -1,0 +1,15 @@
+name: Keep Streamlit App Awake
+
+on:
+  schedule:
+    # Runs at minute 0 past every 6th hour (00:00, 06:00, 12:00, 18:00 UTC)
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+
+jobs:
+  ping_app:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Streamlit App URL
+        # !!! CRITICAL: Change this URL to your SECOND dashboard's URL !!!
+        run: curl -sS --fail "https://advertisingroyal.streamlit.app/" > /dev/null || echo "Ping failed, but continuing."
